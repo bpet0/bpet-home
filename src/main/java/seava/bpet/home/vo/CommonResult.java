@@ -1,4 +1,4 @@
-package seava.bpet.home.meta.vo;
+package seava.bpet.home.vo;
 
 import java.util.HashMap;
 import java.util.Map;

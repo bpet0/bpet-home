@@ -49,6 +49,7 @@ public class MainModule implements Setup{
 		log.info("加载开始");
 		ioc = config.getIoc();
 		ioc.get(Dao.class, "dao");
+		ioc.get(appConf.class).run(ioc);
 	}
 
 	public void destroy(NutConfig arg0) {

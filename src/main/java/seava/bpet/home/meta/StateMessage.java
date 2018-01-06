@@ -1,5 +1,7 @@
 package seava.bpet.home.meta;
 
+import java.util.List;
+
 /**
  * 状态消息meta
  * 
@@ -57,6 +59,11 @@ public class StateMessage {
 	 * 创建时间
 	 */
 	private long createTime;
+	
+	/**
+	 * 多媒体的详情
+	 */
+	private List<StateMessageDetail> mediaDetail; 
 
 	public long getId() {
 		return id;
@@ -136,5 +143,13 @@ public class StateMessage {
 
 	public void setCreateTime(long createTime) {
 		this.createTime = createTime;
+	}
+
+	public List<StateMessageDetail> getMediaDetail() {
+		return mediaDetail;
+	}
+
+	public void setMediaDetail(List<StateMessageDetail> mediaDetail) {
+		this.mediaDetail = mediaDetail;
 	}
 }

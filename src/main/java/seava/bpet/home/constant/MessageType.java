@@ -28,6 +28,7 @@ public enum MessageType {
 		map.put(WORD.getId(), WORD);
 		map.put(IMAGE.getId(), IMAGE);
 		map.put(VIDEO.getId(), VIDEO);
+		map.put(WEB.getId(), WEB);
 	}
 	
 	private MessageType(int id, String value, String text) {
