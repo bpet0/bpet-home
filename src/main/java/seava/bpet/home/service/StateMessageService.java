@@ -7,9 +7,14 @@ import org.nutz.ioc.loader.annotation.IocBean;
 import org.nutz.trans.Atom;
 import org.nutz.trans.Trans;
 
+import seava.bpet.home.constant.CommentType;
 import seava.bpet.home.constant.MessageType;
+import seava.bpet.home.dao.StateCommentDao;
+import seava.bpet.home.dao.StateFabulousDao;
 import seava.bpet.home.dao.StateMessageDao;
 import seava.bpet.home.dao.StateMessageDetailDao;
+import seava.bpet.home.meta.StateComment;
+import seava.bpet.home.meta.StateFabulous;
 import seava.bpet.home.meta.StateMessage;
 import seava.bpet.home.meta.StateMessageDetail;
 
@@ -27,6 +32,12 @@ public class StateMessageService {
 	
 	@Inject
 	private StateMessageDetailDao stateMessageDetailDao;
+	
+	@Inject
+	private StateCommentDao stateCommentDao;
+	
+	@Inject
+	private StateFabulousDao stateFabulousDao;
 	
 	/**
 	 * 新增状态消息
@@ -70,5 +81,99 @@ public class StateMessageService {
 				}
 			}
 		});
+	}
+	
+	/**
+	 * 新增评论
+	 * 
+	 * @param userId
+	 * @param messageId
+	 * @param atUserId
+	 * @param content
+	 */
+	public void addComment(long userId, long messageId, long atUserId, String content) {
+		StateComment sc = new StateComment();
+		sc.setAtUserId(atUserId);
+		sc.setContent(content);
+		sc.setStateMessageId(messageId);
+		sc.setUserId(userId);
+		sc.setCreateTime(System.currentTimeMillis());
+		sc.setCommentType(atUserId == 0 ? CommentType.FOR_MESSAGE.getId() : CommentType.FOR_COMMENT.getId());
+		stateCommentDao.addStateComment(sc);
+	}
+	
+	/**
+	 * 新增点赞
+	 * 
+	 * @param userId
+	 * @param messageId
+	 */
+	public void addFabulous(long userId, long messageId) {
+		StateFabulous sf = new StateFabulous();
+		sf.setCreateTime(System.currentTimeMillis());
+		sf.setStateMessageId(messageId);
+		sf.setUserId(userId);
+		stateFabulousDao.addFabulous(sf);
+	}
+	
+	/**
+	 * 取消点赞
+	 * 
+	 * @param userId
+	 * @param messageId
+	 */
+	public void deleteFabulous(long userId, long messageId) {
+		stateFabulousDao.deleteFabulousByMessageAndUser(messageId, userId);
+	}
+	
+	public List<StateMessage> queryAllStateMessages() {
+		
+	}
+	
+	private void fillAll(List<StateMessage> smList) {
+		for (StateMessage sm : smList) {
+			fillAll(sm);
+		}
+	}
+	
+	/**
+	 * 填充所有的信息
+	 * 
+	 * @param sm
+	 */
+	private void fillAll(StateMessage sm) {
+		fillDetails(sm);
+		fillComments(sm);
+		fillFabulous(sm);
+	}
+	
+	/**
+	 * 填充评论
+	 * 
+	 * @param sm
+	 */
+	private void fillComments(StateMessage sm) {
+		List<StateComment> comments = stateCommentDao.queryCommentsByMessageId(sm.getId());
+		sm.setStateComments(comments);
+	}
+	
+	/**
+	 * 填充点赞
+	 * 
+	 * @param sm
+	 */
+	private void fillFabulous(StateMessage sm) {
+		List<StateFabulous> fabulous = stateFabulousDao.queryFabulousByMessage(sm.getId());
+		sm.setStateFabulous(fabulous);
+	}
+	
+	/**
+	 * 填充详情
+	 * 
+	 * @param sm
+	 */
+	private void fillDetails(StateMessage sm) {
+		List<StateMessageDetail> detailList = stateMessageDetailDao.queryDetailsByMessageId(sm.getId());
+		sm.setMediaDetail(detailList);
 	}
 }

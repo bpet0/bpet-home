@@ -143,7 +143,15 @@ public class StateMessageController {
 		}
 		StateMessage sm = stateMessageDao.queryById(messageId.longValue());
 		if (null == sm) {
-			return CommonResult.fail("")
+			log.error("message[" + messageId + "] user[" + userId + "] 评论 消息不存在");
+			return CommonResult.fail("消息不存在");
+		}
+		try {
+			stateMessageService.addComment(userId, messageId, null == atUserId ? 0 : atUserId, content);
+			return CommonResult.success();
+		} catch (Exception e) {
+			log.error("message[" + messageId + "] user[" + userId + "] content[" + content + "]保存消息出错", e);
+			return CommonResult.fail("新增评论失败");
 		}
 	}
 	
@@ -160,11 +168,55 @@ public class StateMessageController {
 		if (null == messageId || messageId < 1 || null == userId || userId > 1) {
 			return CommonResult.fail("参数错误");
 		}
+		StateMessage sm = stateMessageDao.queryById(messageId.longValue());
+		if (null == sm) {
+			log.error("message[" + messageId + "] user[" + userId + "] 点赞 消息不存在");
+			return CommonResult.fail("消息不存在");
+		}
+		try {
+			stateMessageService.addFabulous(userId, messageId);
+			return CommonResult.success();
+		} catch (Exception e) {
+			log.error("message[" + messageId + "] user[" + userId + "] 点赞失败", e);
+			return CommonResult.fail("点赞失败");
+		}
 	}
 	
+	/**
+	 * 取消点赞
+	 * 
+	 * @param messageId
+	 * @param userId
+	 * @return
+	 */
+	@Ok("json")
+	@At("/cancelFabulous")
 	public Object cancelFabulous(Long messageId, Long userId) {
 		if (null == messageId || messageId < 1 || null == userId || userId > 1) {
 			return CommonResult.fail("参数错误");
 		}
+		StateMessage sm = stateMessageDao.queryById(messageId.longValue());
+		if (null == sm) {
+			log.error("message[" + messageId + "] user[" + userId + "] 取消点赞 消息不存在");
+			return CommonResult.fail("消息不存在");
+		}
+		try {
+			stateMessageService.deleteFabulous(userId, messageId);
+			return CommonResult.success();
+		} catch (Exception e) {
+			log.error("message[" + messageId + "] user[" + userId + "] 取消点赞失败", e);
+			return CommonResult.fail("取消点赞失败");
+		}
+	}
+	
+	/**
+	 * 查询所有的状态消息
+	 * 
+	 * @return
+	 */
+	@Ok("json")
+	@At("/queryAllStateMessages")
+	public Object queryAllStateMessages() {
+		
 	}
 }

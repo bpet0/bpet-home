@@ -1,15 +1,13 @@
-package seava.bpet.home.meta;
+package seava.bpet.home.vo;
 
 /**
- * 消息的点赞
+ * 点赞的vo
  * 
  * @author water
  *
  */
-public class StateFabulous {
+public class StateFabulousVo {
 
-	private long id;
-	
 	/**
 	 * 评论的消息id
 	 */
@@ -24,19 +22,6 @@ public class StateFabulous {
 	 * 用户昵称
 	 */
 	private String userNickName;
-	
-	/**
-	 * 创建时间
-	 */
-	private long createTime;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public long getStateMessageId() {
 		return stateMessageId;
@@ -52,14 +37,6 @@ public class StateFabulous {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	public long getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(long createTime) {
-		this.createTime = createTime;
 	}
 
 	public String getUserNickName() {

@@ -36,6 +36,16 @@ public class StateMessage {
 	private long ownerId;
 	
 	/**
+	 * 用户昵称
+	 */
+	private String userNickName;
+	
+	/**
+	 * 宠物昵称
+	 */
+	private String petNickName;
+	
+	/**
 	 * 状态信息所属宠物id 可以为空
 	 */
 	private long petId;
@@ -65,6 +75,16 @@ public class StateMessage {
 	 */
 	private List<StateMessageDetail> mediaDetail; 
 
+	/**
+	 * 评论信息
+	 */
+	private List<StateComment> stateComments;
+	
+	/**
+	 * 点赞信息
+	 */
+	private List<StateFabulous> stateFabulous;
+	
 	public long getId() {
 		return id;
 	}
@@ -151,5 +171,37 @@ public class StateMessage {
 
 	public void setMediaDetail(List<StateMessageDetail> mediaDetail) {
 		this.mediaDetail = mediaDetail;
+	}
+
+	public List<StateComment> getStateComments() {
+		return stateComments;
+	}
+
+	public void setStateComments(List<StateComment> stateComments) {
+		this.stateComments = stateComments;
+	}
+
+	public List<StateFabulous> getStateFabulous() {
+		return stateFabulous;
+	}
+
+	public void setStateFabulous(List<StateFabulous> stateFabulous) {
+		this.stateFabulous = stateFabulous;
+	}
+
+	public String getUserNickName() {
+		return userNickName;
+	}
+
+	public void setUserNickName(String userNickName) {
+		this.userNickName = userNickName;
+	}
+
+	public String getPetNickName() {
+		return petNickName;
+	}
+
+	public void setPetNickName(String petNickName) {
+		this.petNickName = petNickName;
 	}
 }

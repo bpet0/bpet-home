@@ -1,15 +1,13 @@
-package seava.bpet.home.meta;
+package seava.bpet.home.vo;
 
 /**
- * 消息评论的meta
+ * 状态消息的评论
  * 
  * @author water
  *
  */
-public class StateComment {
-	
-	private long id;
-	
+public class StateCommentVo {
+
 	/**
 	 * 评论的内容
 	 */
@@ -26,39 +24,19 @@ public class StateComment {
 	private long userId;
 	
 	/**
-	 * 用户昵称
-	 */
-	private String userNickName;
-	
-	/**
 	 * at的用户id
 	 */
 	private long atUserId;
 	
 	/**
-	 * 被评论用户的昵称
+	 * 用户昵称
+	 */
+	private String userNickName;
+	
+	/**
+	 * at用户的昵称
 	 */
 	private String atUserNickName;
-	
-	/**
-	 * 评论类型
-	 * 0评论该消息
-	 * 1评论其他人的评论 at了某人
-	 */
-	private int commentType;
-	
-	/**
-	 * 创建时间
-	 */
-	private long createTime;
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 	public String getContent() {
 		return content;
@@ -90,22 +68,6 @@ public class StateComment {
 
 	public void setAtUserId(long atUserId) {
 		this.atUserId = atUserId;
-	}
-
-	public int getCommentType() {
-		return commentType;
-	}
-
-	public void setCommentType(int commentType) {
-		this.commentType = commentType;
-	}
-
-	public long getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(long createTime) {
-		this.createTime = createTime;
 	}
 
 	public String getUserNickName() {
